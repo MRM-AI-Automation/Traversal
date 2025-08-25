@@ -90,7 +90,7 @@ namespace planner
   class SensorCallback : public rclcpp::Node
     {
     public:
-        SensorCallback(std::string imu_topic, std::string gps_topic,std::string aruco_topic,std::string point_cloud_topic) : Node("planner_node")
+        SensorCallback(std::string imu_topic,std::string aruco_topic,std::string point_cloud_topic) : Node("planner_node")
         {
             // setting custom callback queue for node
 
@@ -153,7 +153,7 @@ namespace planner
 
         // Sensor Data Variables
 
-        double aruco_x=100, aruco_y = 100, obs_y = 100;
+        double aruco_x=100, aruco_y = 100,obs_x=100, obs_y = 100;
         double current_orientation, dest_orientation;
         double curr_time, temp_time;
         bool zero_vel_flag;
@@ -309,32 +309,9 @@ namespace planner
         return obstacle_detect;
     }
 
-    SearchPatternType SensorCallback::getSearchPatternType()
-    {
-        return FollowPattern;
-    }
-    void SensorCallback::setSearchPatternType(SearchPatternType state)
-    {
-        FollowPattern = state;
-    }
-
     void SensorCallback::callStateClassifier()
     {
         RoverStateClassifier();
-    }
-
-    double SensorCallback::bearing(double dest, double curr)
-    {
-        // current orientation ranges from -180 to 180 and destination orientation ranges from -180 to 180
-        //RCLCPP_INFO(this->get_logger(),"dest=%f curr=%f",dest,curr);
-        if (dest - curr > 180)
-            return -(360 - (dest - curr));
-        else if (dest - curr > 0)
-            return (dest - curr);
-        else if (dest - curr < -180)
-            return (360 - abs(dest - curr));
-        else
-            return -(dest - curr);
     }
 
     void SensorCallback::obstacleClassifier()
@@ -372,7 +349,7 @@ namespace planner
 
     void SensorCallback::dataAnalyzer()
     {
-        else if (PrevState == kArucoFollowing)
+        if (PrevState == kArucoFollowing)
         {
             RCLCPP_INFO(this->get_logger(), "Aruco Reached!");
             RCLCPP_INFO(this->get_logger(), "Staying for 10 Seconds");
@@ -401,15 +378,14 @@ namespace planner
 
         obstacleClassifier();
 
-        if (getObstacleStatus() == true)
-            search_pattern_function = 0;
+
     }
 
 
 
-    void SensorCallback::arucpCallback(const stereo::msg::Aruco::SharedPtr aruco)
+    void SensorCallback::arucoCallback(const stereo::msg::Aruco::SharedPtr aruco)
     {
-        setArrowStatus(aruco->is_found);
+        setArucoStatus(aruco->is_found);
         if (aruco->is_found == true)
         {
             aruco_x = aruco->x;
