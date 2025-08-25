@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<robot name="martin" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="body_color" value="Gazebo/Orange" />
+<xacro:property name="wheel_color" value="Gazebo/Silver" />
+
+<gazebo>
+  <!-- <plugin filename="libgazebo_ros_control.so" name="control">
+    <robotNamespace>/skid4wd</robotNamespace>
+  </plugin> -->
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <updateRate>100.0</updateRate>
+    <leftFrontJoint>joint_front_left</leftFrontJoint>
+    <rightFrontJoint>joint_front_right</rightFrontJoint>
+    <leftRearJoint>joint_rear_left</leftRearJoint>
+    <rightRearJoint>joint_rear_right</rightRearJoint>
+    <wheelSeparation>1.2</wheelSeparation>
+    <wheelDiameter>0.80</wheelDiameter>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <torque>100</torque>
+    <topic_name_twist>/cmd_vel</topic_name_twist>
+    <broadcastTF>true</broadcastTF>
+  </plugin>
+</gazebo>
+<gazebo reference="base_link">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="wheel_front_left_1">
+  <material>${wheel_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="wheel_front_right_1">
+  <material>${wheel_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="wheel_rear_left_1">
+  <material>${wheel_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="wheel_rear_right_1">
+  <material>${wheel_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+</robot>

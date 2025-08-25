@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<robot name="arrow1">
+
+    <gazebo reference="arrow1">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="base1">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <link name="base1">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="2"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+            <mesh filename="package://robot/meshes/stand1.stl" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+            <mesh filename="package://robot/meshes/stand1.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="arrow1_joint" type="fixed">
+        <origin xyz="-0.0075 0 0" rpy="0 0 0"/>
+        <parent link="base1"/>
+        <child link="arrow1"/>
+    </joint>
+    <link name="arrow1">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+            <mesh filename="package://robot/meshes/arrowfinal.stl" scale="1 1 1"/>
+            </geometry>
+            
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+            <mesh filename="package://robot/meshes/arrowfinal.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+</robot>
+
+
